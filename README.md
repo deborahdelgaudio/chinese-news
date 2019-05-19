@@ -3,7 +3,7 @@
 
 ## Todo
 
-1. Convert CSV into SQL
+1. Convert CSV data [from this Kaggle dataset](https://www.kaggle.com/ceshine/yet-another-chinese-news-dataset) from into SQL
 2. Create a contanirezed database to store data
 3. Write a small flask app that
     - Expose a list of news ordered byt the most recent news
