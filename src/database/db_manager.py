@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
 
+
 class DatabaseManager(object):
     """
     class that helps to connect to msql server and fetch records
@@ -27,7 +28,8 @@ class DatabaseManager(object):
                 database=self.config['DATABASE'],
                 port=self.config['PORT'],
                 user=self.config['USER'],
-                password=self.config['PASSWORD'])
+                password=self.config['PASSWORD']
+            )
         except Error as err:
             print(str(err))
             raise err

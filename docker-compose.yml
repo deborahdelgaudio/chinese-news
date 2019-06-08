@@ -9,6 +9,7 @@ services:
       - "./db/data:/docker-entrypoint-initdb.d"
     environment:
       MYSQL_ROOT_PASSWORD: rootdb
+      MYSQL_DATABASE: chinese_news
       MYSQL_USER: cn_user
       MYSQL_PASSWORD: password
     ports:
