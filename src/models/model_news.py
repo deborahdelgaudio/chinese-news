@@ -1,4 +1,4 @@
-from src.database.db_manager import DatabaseManager
+from database.db_manager import DatabaseManager
 
 class ModelNews(object):
 
