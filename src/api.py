@@ -1,16 +1,18 @@
 import flask
-from src.database.db_manager import DatabaseManager
+from src.models.model_news import ModelNews
 
 app = flask.Flask(__name__)
 app.config.from_pyfile('config/config.cfg')
 
-with DatabaseManager(app.config) as db:
-    record = db.execute_query("SELECT * FROM news LIMIT 1;")
-    print(record)
+model_news = ModelNews(app.config)
 
 @app.route('/')
 def index():
-    return "Hello Gabri!"
+    return flask.jsonify({'Status': 'OK'})
 
-if __name__ == "__main__":
+@app.route('/news')
+def all_news():
+    return flask.jsonify(model_news.get_all_news())
+
+if __name__ == '__main__':
     app.run()
