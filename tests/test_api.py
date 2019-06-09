@@ -1,5 +1,10 @@
+import sys
+sys.path.insert(0, '../src')
+import json
+
 import pytest
-import src.api as api
+
+from src import api
 
 @pytest.fixture
 def client():
@@ -10,4 +15,15 @@ def client():
 
 def test_index(client):
     response = client.get('/')
-    print(response)
+    assert response.status_code == 200
+    assert response.headers.get('Content-Type') == 'application/json'
+    assert json.loads(response.data) == {'Status': 'OK'}
+
+def test_allnews(client):
+    response = client.get('/news')
+    assert response.status_code == 200
+    assert response.headers.get('Content-Type') == 'application/json'
+
+    data = json.loads(response.data)
+    # It should returns last 100 news
+    assert len(data) == 100
