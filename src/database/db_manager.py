@@ -52,13 +52,14 @@ class DatabaseManager(object):
 
     def execute_query(self, query, input=None):
         """
+        :param input:
         :param self:
         :param query: string -> query to execute
         :return: records
         """
         print("\nFetching records with the following query: \n{query} \n{input}".format(query=query, input=input))
 
-        if input == None:
+        if input is None:
             self.cursor.execute(query)
         else:
             self.cursor.execute(query, input)
@@ -68,5 +69,5 @@ class DatabaseManager(object):
         return records
 
     def update(self):
-        #self.connection.commit()
+        # self.connection.commit()
         pass
