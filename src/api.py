@@ -1,6 +1,9 @@
+import sys
 import flask
 
-from .models.model_news import ModelNews
+sys.path.insert(0, '.')
+
+from src.models.model_news import ModelNews
 
 app = flask.Flask(__name__)
 app.config.from_pyfile('config/config.cfg')

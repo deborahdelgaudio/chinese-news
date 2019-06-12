@@ -2,7 +2,7 @@ import sys
 import pytest
 import json
 
-sys.path.insert(0, '../src')
+sys.path.insert(0, '..')
 
 from src import api
 
