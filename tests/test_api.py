@@ -38,5 +38,4 @@ def test_news_by_id(client):
     assert response.headers.get('Content-Type') == 'application/json'
 
     data = json.loads(response.data)
-    # It should returns last 100 news
     assert data['id'] == 1

@@ -50,7 +50,7 @@ class DatabaseManager(object):
         print("\nClosing connection to {} Database".format(self.config['DATABASE']))
         self.connection.close()
 
-    def execute_query(self, query, input=None):
+    def fetch_records(self, query, input=None):
         """
         :param input:
         :param self:
@@ -68,6 +68,19 @@ class DatabaseManager(object):
 
         return records
 
-    def update(self):
-        # self.connection.commit()
-        pass
+    def update_records(self, query, input):
+        """
+
+        :param query:
+        :param input:
+        :return:
+        """
+        print("\nUpdating records with the following query: \n{query} \n{input}".format(query=query, input=input))
+
+        try:
+            self.cursor.execute(query, input)
+            self.connection.commit()
+        except Error as err:
+            print(err.msg)
+
+        return True

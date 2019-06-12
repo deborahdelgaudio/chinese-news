@@ -12,7 +12,7 @@ class ModelNews(object):
     def get_all_news(self):
         query = 'SELECT * FROM news ORDER BY date DESC LIMIT 100;'
         with DatabaseManager(self._db_conf) as db:
-            all_news = db.execute_query(query)
+            all_news = db.fetch_records(query)
 
         return list(
             map(
@@ -33,7 +33,7 @@ class ModelNews(object):
         query = 'SELECT * FROM news WHERE id = %s;'
         with DatabaseManager(self._db_conf) as db:
             input = (id,)
-            news = db.execute_query(query, input)
+            news = db.fetch_records(query, input)
 
         if len(news) == 0:
             return None
@@ -50,7 +50,10 @@ class ModelNews(object):
             )
 
     def create_news(self, news):
-        pass
+        query = 'INSERT INTO news(title,description,image,url,source,date) VALUES (%s,%s,%s,%s,%s,%s)'
+        with DatabaseManager(self._db_conf) as db:
+            input = tuple(news.values())
+            db.update_records(query, input)
 
     def update_news_val(self, val):
         pass
