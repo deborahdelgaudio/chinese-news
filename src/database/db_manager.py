@@ -82,5 +82,6 @@ class DatabaseManager(object):
             self.connection.commit()
         except Error as err:
             print(err.msg)
+            raise err
 
         return True

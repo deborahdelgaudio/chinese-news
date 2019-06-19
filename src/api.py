@@ -24,18 +24,36 @@ def all_news():
         record = flask.request.form.copy().to_dict()
 
         if len(record) == 0:
-            return flask.jsonify([{'Status': 'Bad Request'}, {'Error': 'Record inserted is empty'}]), 400
+            return flask.jsonify([
+                {'Status': 'Bad Request'},
+                {'Error': 'Record inserted is empty'}
+            ]
+            ), 400
         else:
-            if 'url' not in record.keys() or 'source' not in record.keys() or 'date' not in record.keys() or 'title' not in record.keys() or 'description' not in record.keys() or 'image' not in record.keys():
-                return flask.jsonify([{'Status': 'Bad Request'}, {'Error': 'A value is missing'}, record]), 400
+            news_attributes = ('title','description','image','url','source','date')
+            news_attributes_not_null = news_attributes[3:]
+
+            if not all(attribute in record.keys() for attribute in news_attributes):
+                return flask.jsonify([
+                    {'Status': 'Bad Request'},
+                    {'Error': 'A value is missing'},
+                    record]
+                ), 400
             else:
-                if record['url'] == '' or record['source'] == '' or record['date'] == '':
-                    return flask.jsonify([{'Status': 'Bad Request'}, {'Error': 'NOT NULL value is empty'}, record]), 400
+                if not all(record.get(attribute) for attribute in news_attributes_not_null):
+                    return flask.jsonify([
+                        {'Status': 'Bad Request'},
+                        {'Error': 'NOT NULL value is empty'},
+                        record]
+                    ), 400
                 else:
                     try:
                         model_news.create_news(record)
-                    except KeyError as key:
-                        return flask.jsonify([{'Status': 'Bad Request'}, {'Key Error': key.args}]), 400
+                    except Exception as err:
+                        return flask.jsonify([
+                            {'Status': 'Bad Request'},
+                            {'Error': err.args[1]}]
+                        ), 400
 
                     return flask.jsonify({'Status': 'OK'})
 
