@@ -50,13 +50,23 @@ class ModelNews(object):
             )
 
     def create_news(self, news):
-        query = 'INSERT INTO news(title,description,image,url,source,date) VALUES (%s,%s,%s,%s,%s,%s)'
+        query = 'INSERT INTO news(title,description,image,url,source,date) VALUES (%s,%s,%s,%s,%s,%s);'
         with DatabaseManager(self._db_conf) as db:
             input = tuple(news.values())
             db.update_records(query, input)
 
-    def update_news_val(self, val):
-        pass
+    def update_news_val(self, keys, values, id):
+        queries =[]
+        for k in keys:
+            queries.append('UPDATE news SET {k}=%s WHERE id=%s;'.format(k=k))
+
+
+        with DatabaseManager(self._db_conf) as db:
+            i = 0
+            for val in values:
+                input = (val, id)
+                db.update_records(queries[i], input)
+                i += 1
 
     def delete_news_by_id(self, id):
         pass
