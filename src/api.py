@@ -65,7 +65,7 @@ def all_news():
                 return flask.jsonify({'Status': 'OK'})
 
 
-@app.route('/news/<int:id>', methods=['GET', 'POST']) # TODO: use PUT method
+@app.route('/news/<int:id>', methods=['GET', 'POST', 'DELETE']) # TODO: use PUT method
 def news_by_id(id):
 
     if flask.request.method == 'GET':
@@ -75,6 +75,17 @@ def news_by_id(id):
             return flask.jsonify({'Status': 'Not Found'}), 404
 
         return flask.jsonify(news)
+
+    if flask.request.method == 'DELETE':
+        try:
+            model_news.delete_news_by_id(id)
+        except Exception as err:
+            return flask.jsonify([
+                {'Status': 'Bad Request'},
+                {'Error': err.args}]
+            ), 400
+
+        return flask.jsonify({'Status': 'OK'})
 
     record = flask.request.form.copy().to_dict()
 

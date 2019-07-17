@@ -69,4 +69,7 @@ class ModelNews(object):
                 i += 1
 
     def delete_news_by_id(self, id):
-        pass
+        query = 'DELETE FROM news WHERE id=%s;'
+        with DatabaseManager(self._db_conf) as db:
+            input = (id,)
+            db.update_records(query, input)
